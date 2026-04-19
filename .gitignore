@@ -1,0 +1,34 @@
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# Compiled PDF (do not commit; Overleaf and CI build it)
+*.pdf
+
+# Editor and OS junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code local state (keep settings.json if you want to share hooks)
+.claude/settings.local.json

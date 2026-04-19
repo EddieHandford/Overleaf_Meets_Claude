@@ -1,0 +1,36 @@
+\section{Pitfalls}
+\label{sec:pitfalls}
+
+A short list of mistakes that bite once and then never again.
+
+\begin{pitfallbox}
+\textbf{Editing both sides without pulling.} If you edit in Overleaf and locally without syncing, the Overleaf GitHub push will fail and you will have to resolve a merge in Overleaf's UI, which is the worst place to resolve a merge. \emph{Rule:} always pull before you start editing, on whichever side you are editing.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Hallucinated citations.} Claude can produce plausible-looking \verb|\cite{smith2020foo}| keys that do not exist in your \verb|.bib|. Before pushing, ask Claude (or run a quick grep) to verify every \verb|\cite| key appears in \verb|references.bib|. CI can enforce this.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Committed build artefacts.} If a \verb|main.pdf|, \verb|main.aux|, or \verb|main.bbl| gets committed once, it keeps reappearing in diffs forever. Put these in \verb|.gitignore| \emph{before} the first push, and use \verb|git rm --cached| to remove any that slipped through.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Whitespace churn from Overleaf.} Overleaf occasionally reflows whitespace on save. A diff that looks huge may be only whitespace. Use \verb|git diff -w| to check before panicking --- and ask Claude not to reflow entire paragraphs unless you asked for it.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Over-eager global rewrites.} ``Make the paper more concise'' is a prompt that can rewrite half the paper. Scope every prompt: name the file or section, state the constraint (``without changing any claim'', ``preserving all citations''), and ask for the diff first.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Invented \texttt{\textbackslash ref} targets.} A refactor that renames a \verb|\label| without updating every \verb|\ref| leaves you with ``??'' in the PDF. The audit prompt in Section~\ref{sec:strengths} catches this; running a build in CI catches it too.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Losing co-author edits.} If a co-author is editing in Overleaf while you are editing locally, their changes will not appear on GitHub until they push. Coordinate: either treat Overleaf as the source of truth during active co-writing, or ask them to pause while you do a Claude pass.
+\end{pitfallbox}
+
+\begin{pitfallbox}
+\textbf{Forgetting that Overleaf push is not automatic.} Overleaf does not auto-sync to GitHub. If you have been writing for an hour and wonder why Claude does not see your changes, you probably have not pushed yet.
+\end{pitfallbox}
