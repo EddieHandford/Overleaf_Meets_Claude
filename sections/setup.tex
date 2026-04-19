@@ -1,0 +1,83 @@
+\section{Setup}
+\label{sec:setup}
+
+One-time setup takes about ten minutes. You need an Overleaf Premium account (GitHub sync is a paid feature), a GitHub account, and a machine with Node.js and Git installed.
+
+\subsection{Link Overleaf to GitHub}
+
+In Overleaf, open your project, then:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Menu} $\rightarrow$ \textbf{GitHub} $\rightarrow$ \textbf{Create a new repository on GitHub}, or link an existing one.
+  \item Authorise Overleaf to access the repository.
+  \item Overleaf performs an initial push. You now have a repository with your \verb|main.tex|, \verb|.bib| files, figures, etc.
+\end{enumerate}
+
+From this point on, Overleaf will not auto-sync. You push from Overleaf (\textbf{Menu $\rightarrow$ GitHub $\rightarrow$ Push}) and pull from Overleaf (\textbf{Menu $\rightarrow$ GitHub $\rightarrow$ Pull}) explicitly.
+
+\subsection{Clone the repository locally}
+
+\begin{lstlisting}[style=shell]
+$ git clone git@github.com:<you>/<your-paper>.git
+$ cd <your-paper>
+\end{lstlisting}
+
+\subsection{Install Claude Code}
+
+Claude Code is distributed via npm:
+
+\begin{lstlisting}[style=shell]
+$ npm install -g @anthropic-ai/claude-code
+$ claude --version
+\end{lstlisting}
+
+\noindent See \url{https://docs.claude.com/en/docs/claude-code} for the current installation instructions and authentication steps.
+
+\subsection{Start a session in the project}
+
+\begin{lstlisting}[style=shell]
+$ cd <your-paper>
+$ claude
+\end{lstlisting}
+
+\noindent On first run, Claude Code will walk you through authentication. Subsequent sessions start immediately.
+
+\subsection{Add a \texttt{CLAUDE.md}}
+
+A \verb|CLAUDE.md| at the repository root is Claude's memory across sessions. It is read automatically at the start of every session and anchors the model to your conventions so you do not have to repeat them.
+
+A minimal template for a paper:
+
+\begin{lstlisting}[style=tex]
+# CLAUDE.md
+
+## What this repo is
+A LaTeX paper: "<working title>". Target venue: <venue, page limit>.
+
+## Style
+- British English.
+- Past tense for methods; present for claims.
+- Oxford comma; en-dash for ranges; em-dash for asides (no spaces).
+- Defined terms are italicised on first use, roman thereafter.
+
+## Citations
+- `\citet{key}` when the author is a noun ("Smith et al. (2023) showed...").
+- `\citep{key}` when parenthetical.
+- Every `\cite` key must exist in `references.bib`. Never invent keys.
+
+## File layout
+- `main.tex` - preamble and `\input{}` of each section.
+- `sections/*.tex` - one file per section.
+- `references.bib` - single bibliography.
+- `figures/` - source figures (PDF or TikZ).
+
+## Do not commit
+Build artefacts: `*.aux *.log *.out *.toc *.bbl *.blg *.fls
+*.fdb_latexmk *.synctex.gz`. Compiled `main.pdf` is also ignored.
+
+## Commit style
+Imperative mood, <= 72 chars, describe the "why".
+Example: "Tighten intro to fit 400-word limit for reviewer R1".
+\end{lstlisting}
+
+This file is both a working configuration and a template you can copy into your own repositories.

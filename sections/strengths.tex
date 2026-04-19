@@ -1,0 +1,76 @@
+\section{What Claude Code is especially good at}
+\label{sec:strengths}
+
+This section is a catalogue of edits that are slow, error-prone, or outright tedious by hand, and that Claude Code does well. Each example is a real prompt you can paste.
+
+\subsection{Global notation and style changes}
+
+\begin{lstlisting}[style=prompt]
+> Replace every `\cite{...}` with `\citet{...}` where the citation is used as a grammatical noun ("X et al. showed"), and `\citep{...}` otherwise. Show me the full diff before writing.
+\end{lstlisting}
+
+\begin{lstlisting}[style=prompt]
+> We have been inconsistent about the symbol for the learning rate. Pick one (prefer `\eta`), and replace `\alpha` with `\eta` everywhere it denotes learning rate (not when it denotes significance level). List any ambiguous cases for me to resolve.
+\end{lstlisting}
+
+\subsection{Cross-reference audits}
+
+\begin{lstlisting}[style=prompt]
+> Audit all cross-references in the paper. List:
+>   1. every `\label` that is never `\ref`-ed,
+>   2. every `\ref` whose target label does not exist,
+>   3. every `\cite` key not present in references.bib.
+> Do not change any files yet; just produce the report.
+\end{lstlisting}
+
+\subsection{Bibliography hygiene}
+
+\begin{lstlisting}[style=prompt]
+> In references.bib, normalise every entry: authors in "Last, First" form, journal names in title case, year present, DOI field present where known. Flag entries that look incomplete or suspicious.
+\end{lstlisting}
+
+\subsection{Length surgery}
+
+\begin{lstlisting}[style=prompt]
+> The introduction is currently ~650 words and must fit in 400. Shorten it, preserving every factual claim and every citation. Do not remove equations. Produce the diff only; I will approve.
+\end{lstlisting}
+
+\subsection{Acronym and nomenclature passes}
+
+\begin{lstlisting}[style=prompt]
+> Build an acronym list: scan the paper for capitalised acronyms, find the first occurrence of each, and ensure it is expanded on first use ("long form (LF)"). Emit a glossary table at the start of the appendix.
+\end{lstlisting}
+
+\subsection{Response-to-reviewers drafting}
+
+\begin{lstlisting}[style=prompt]
+> Reviewer 2 comment R2.4 (in review.txt) asks why we did not compare to method X. I added section 4.3 and figure 5 to address this. Draft the response entry for R2.4, citing the exact section and figure, in the tone of the existing responses in response.tex.
+\end{lstlisting}
+
+\subsection{Structural refactors}
+
+\begin{lstlisting}[style=prompt]
+> Split sections/methods.tex into three files, one per subsection, update main.tex to `\input` them, and keep the resulting PDF byte-identical as far as possible.
+\end{lstlisting}
+
+\subsection{Figure and table scaffolding}
+
+\begin{lstlisting}[style=prompt]
+> Given the numbers in results.csv, produce a booktabs table with method in the first column and the three metrics as columns 2--4, with the best value in each column in bold. Place it in sections/results.tex where the TODO marker is.
+\end{lstlisting}
+
+\subsection{British/American consistency}
+
+\begin{lstlisting}[style=prompt]
+> The paper should be British English. Find every Americanism (spellings, date formats, quotation style) and fix it. Preserve quoted material verbatim.
+\end{lstlisting}
+
+\subsection{Build verification}
+
+\begin{lstlisting}[style=prompt]
+> Run `latexmk -pdf main.tex`. If it fails, read the log, fix the cause, and re-run until it builds cleanly with no undefined references and no overfull boxes greater than 5pt.
+\end{lstlisting}
+
+\begin{tipbox}
+Patterns that work well: ask for the plan or the report first, approve, then ask Claude to make the edit. You keep more control and the diffs stay small.
+\end{tipbox}

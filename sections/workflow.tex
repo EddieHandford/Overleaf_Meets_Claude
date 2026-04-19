@@ -1,0 +1,70 @@
+\section{The daily workflow}
+\label{sec:workflow}
+
+The loop is deliberately simple. The only rule is: \textbf{pull before you edit on either side.}
+
+\subsection{The loop}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Draft in Overleaf.} Write, preview, iterate. This is the fastest part of the loop; stay in it for as long as you are making normal prose edits.
+  \item \textbf{Push from Overleaf to GitHub.} \textit{Menu $\rightarrow$ GitHub $\rightarrow$ Push.} Overleaf bundles your changes into a commit and pushes to \verb|main|.
+  \item \textbf{Pull locally.}
+\begin{lstlisting}[style=shell]
+$ git pull
+\end{lstlisting}
+  \item \textbf{Run Claude Code.}
+\begin{lstlisting}[style=shell]
+$ claude
+\end{lstlisting}
+  Describe the edit you want. Claude will read the relevant files, propose diffs, and --- once you approve --- write them. For non-trivial edits, ask for a branch:
+\begin{lstlisting}[style=prompt]
+> Create a branch `claude/shorten-intro` and shorten sections/introduction.tex to 300 words, preserving every factual claim.
+\end{lstlisting}
+  \item \textbf{Review the diffs.} Either in Claude's approval prompts or afterwards with \verb|git diff|. The \verb|/review| slash command gives you a second-pass review.
+  \item \textbf{Commit and push.} Claude will offer to write the commit message; accept it, then:
+\begin{lstlisting}[style=shell]
+$ git push
+\end{lstlisting}
+  \item \textbf{Pull into Overleaf.} \textit{Menu $\rightarrow$ GitHub $\rightarrow$ Pull.} Overleaf merges the changes and recompiles.
+  \item Back to step~1.
+\end{enumerate}
+
+\subsection{A picture of the loop}
+
+\begin{center}
+\begin{tabular}{c c c c c}
+\toprule
+Overleaf & $\longrightarrow$ & GitHub & $\longleftarrow$ & Local + Claude Code \\
+\midrule
+draft prose     & push & \verb|main| branch & pull & global / structural edits \\
+live preview    &      & version history    &      & multi-file refactor \\
+co-authors      &      & CI builds PDF      &      & bibliography audits \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{When to use which tool}
+
+\begin{center}
+\begin{tabular}{p{0.55\linewidth} l}
+\toprule
+\textbf{Task} & \textbf{Best tool} \\
+\midrule
+Drafting a new paragraph with live preview             & Overleaf \\
+Fixing a single typo you just spotted                  & Overleaf \\
+Co-author leaving comments                             & Overleaf \\
+Renaming a defined term in 40 places                   & Claude Code \\
+Standardising citation commands across the paper       & Claude Code \\
+Auditing every \verb|\cite| against \verb|references.bib| & Claude Code \\
+Shortening a section to a word limit                   & Claude Code \\
+Drafting the response-to-reviewers letter              & Claude Code \\
+Checking the paper still compiles                      & Overleaf or local \verb|latexmk| \\
+Reviewing what changed since last week                 & GitHub \\
+Reverting a bad Claude edit                            & GitHub \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{tipbox}
+If you are about to make a bulk edit in Overleaf with find-and-replace, stop. Push, switch to Claude Code, and describe what you want in a sentence. You will get a reviewable diff instead of a silent one.
+\end{tipbox}

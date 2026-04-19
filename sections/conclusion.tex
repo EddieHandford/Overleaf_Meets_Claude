@@ -1,0 +1,20 @@
+\section{Conclusion}
+
+The workflow in this guide is not novel infrastructure. It is three existing tools aimed at what each is best at:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Overleaf} for the parts of writing that are about flow and feedback.
+  \item \textbf{Claude Code} for the parts that are about scale and consistency.
+  \item \textbf{GitHub} for the parts that are about history and collaboration.
+\end{itemize}
+
+The compound effect is larger than any one of them. You write faster because you stay in the tool that is best for the moment, and you are not afraid of bulk changes because Claude makes them reviewable and Git makes them reversible.
+
+Two final suggestions to get the most out of this:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Invest in \texttt{CLAUDE.md} early.} The first hour you spend writing it pays for itself within a week. Every convention you encode is one you never re-explain.
+  \item \textbf{Build the PDF in CI.} Every push verifies the paper compiles. You will catch more problems before your co-authors do, and Claude gets a feedback loop it can learn from.
+\end{enumerate}
+
+The repository containing this guide is itself an example --- modular sections, a \verb|CLAUDE.md|, a \verb|.gitignore|, and one commit per meaningful change. Open it in Overleaf, edit with Claude Code, and use it as a starting point for your own projects.

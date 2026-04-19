@@ -1,0 +1,23 @@
+\section{Introduction}
+
+If you write in \LaTeX{}, you have probably had one of the following experiences:
+
+\begin{itemize}[leftmargin=*]
+  \item A reviewer asks you to rename a defined term that appears in forty places across eight section files.
+  \item Your co-author changes citation style from \verb|\cite| to \verb|\citet|/\verb|\citep| the night before submission.
+  \item You need to shorten an abstract by thirty words without losing a claim.
+  \item Half of your \verb|\ref| targets point at labels that no longer exist, and you only find out in the PDF.
+\end{itemize}
+
+Overleaf is excellent at writing, previewing, and sharing \LaTeX{}. It is not built for bulk structural edits. A local editor with an AI assistant is excellent at bulk edits but bad at real-time preview and lightweight collaboration. GitHub ties the two together and gives you a clean audit trail.
+
+This guide documents a workflow that combines the three:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Draft} in Overleaf with live preview.
+  \item \textbf{Sync} to GitHub using Overleaf's built-in integration.
+  \item \textbf{Edit} locally with Claude Code for anything global, structural, or repetitive.
+  \item \textbf{Push} back, pull into Overleaf, continue writing.
+\end{enumerate}
+
+The repository that contains this document is itself a worked example: a modular \LaTeX{} project with a \verb|CLAUDE.md|, a \verb|.gitignore|, and one file per section.

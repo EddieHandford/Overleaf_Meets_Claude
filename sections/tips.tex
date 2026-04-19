@@ -1,0 +1,123 @@
+\section{Power tips}
+\label{sec:tips}
+
+These are the changes that take a working setup and make it noticeably sharper.
+
+\subsection{Keep \texttt{CLAUDE.md} alive}
+
+\begin{tipbox}
+Treat \verb|CLAUDE.md| as the single source of truth for conventions Claude should follow. Every time you correct Claude twice on the same thing (``use \verb|\citet| not \verb|\cite|'', ``British English'', ``do not rewrite section~2''), add a one-line rule. You are training future sessions.
+\end{tipbox}
+
+\subsection{Modularise with \texttt{\textbackslash input}}
+
+One file per section makes diffs small, reviews fast, and lets Claude edit one section without touching others. A good default:
+
+\begin{lstlisting}[style=tex]
+main.tex
+sections/
+  introduction.tex
+  background.tex
+  methods.tex
+  results.tex
+  discussion.tex
+  conclusion.tex
+references.bib
+figures/
+\end{lstlisting}
+
+\subsection{Use \texttt{/review} before pushing}
+
+\verb|/review| is Claude Code's built-in slash command that runs a critical second pass over your uncommitted changes. Running it before \verb|git push| catches over-eager edits, invented citations, and broken cross-references before they reach Overleaf.
+
+\subsection{Build verification in CI}
+
+Add a GitHub Action that runs \verb|latexmk -pdf main.tex| on every push. Two benefits:
+
+\begin{enumerate}[leftmargin=*]
+  \item You find out about compile failures immediately, not when your co-author pulls.
+  \item Claude can read the CI log after a failed build and self-correct next time.
+\end{enumerate}
+
+A minimal workflow:
+
+\begin{lstlisting}[style=shell]
+# .github/workflows/build.yml
+name: Build PDF
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paper
+          path: main.pdf
+\end{lstlisting}
+
+\subsection{\texttt{latexdiff} for co-author-friendly revisions}
+
+When you ship a revision, co-authors want to see what changed without reading the whole paper. \verb|latexdiff| produces a change-bar PDF between two commits:
+
+\begin{lstlisting}[style=shell]
+$ git show v1:main.tex > old.tex
+$ latexdiff old.tex main.tex > diff.tex
+$ latexmk -pdf diff.tex
+\end{lstlisting}
+
+\noindent Ask Claude to automate this as a script in the repo.
+
+\subsection{One branch per revision round}
+
+Branch names like \verb|claude/shorten-intro|, \verb|claude/reviewer-response-round-1|, or \verb|claude/notation-cleanup| keep work scoped and reversible. Merge via pull request when you are happy; you get free code review on prose.
+
+\subsection{Let Claude write your commit messages}
+
+Over a paper's lifetime this becomes a per-change log: ``Tighten intro to fit R1 word limit'', ``Standardise notation for learning rate'', ``Add table~3 (ablation)''. Invaluable when a co-author asks ``what did we change last week?''
+
+\subsection{Hooks: lint on save}
+
+If you have \verb|chktex| installed, a \verb|PostToolUse| hook in \verb|.claude/settings.json| can run it automatically on every edited \verb|.tex| file:
+
+\begin{lstlisting}[style=shell]
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "chktex -q \"$CLAUDE_FILE_PATH\" || true" }
+        ]
+      }
+    ]
+  }
+}
+\end{lstlisting}
+
+\noindent Claude sees the lint output and can correct on the spot.
+
+\subsection{Ignore build artefacts aggressively}
+
+Every file Overleaf generates locally (\verb|.aux|, \verb|.log|, \verb|.bbl|, \verb|.fls|, \verb|.fdb_latexmk|, \verb|.synctex.gz|) should be in \verb|.gitignore|. Syncing these back through Overleaf causes noisy commits and occasional merge grief.
+
+\subsection{Use plan mode for big edits}
+
+For anything larger than a section, ask Claude to plan before it writes:
+
+\begin{lstlisting}[style=prompt]
+> Plan how you would restructure the results section to lead with the headline finding. Do not edit yet; write the plan to plan.md.
+\end{lstlisting}
+
+\noindent Read the plan, push back on what you disagree with, then approve.
+
+\subsection{Ask for a report, not a rewrite}
+
+Before a destructive edit, ask Claude to produce a list. ``Which \verb|\cite| keys are unused?'', ``Which sentences are longer than 40 words?'', ``Which figures have no caption?''. You then decide what to act on.
+
+\subsection{Use custom slash commands}
+
+Repeated tasks become slash commands in \verb|.claude/commands/|. A \verb|/tighten| command that shortens the current section, or a \verb|/ack| that drafts an acknowledgements paragraph, saves retyping the prompt every time.

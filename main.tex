@@ -1,0 +1,119 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+
+% ---------- Colours ----------
+\definecolor{accent}{HTML}{0B6E4F}
+\definecolor{accentbg}{HTML}{E8F4EE}
+\definecolor{warn}{HTML}{A1341C}
+\definecolor{warnbg}{HTML}{FCEDE6}
+\definecolor{codebg}{HTML}{F5F5F5}
+\definecolor{codekey}{HTML}{0A4DA6}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  citecolor=accent
+}
+
+% ---------- Listings styles ----------
+\lstdefinestyle{shell}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{codebg},
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  literate={\$}{{\textcolor{codekey}{\$}}}1
+}
+\lstdefinestyle{prompt}{
+  basicstyle=\ttfamily\small\itshape,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{codebg},
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+\lstdefinestyle{tex}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{codebg},
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+% ---------- Callout environments ----------
+\newtcolorbox{tipbox}{
+  colback=accentbg,
+  colframe=accent,
+  boxrule=0.4pt,
+  arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,
+  title=\textbf{Tip},
+  coltitle=white,
+  colbacktitle=accent,
+  fonttitle=\bfseries
+}
+\newtcolorbox{pitfallbox}{
+  colback=warnbg,
+  colframe=warn,
+  boxrule=0.4pt,
+  arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,
+  title=\textbf{Pitfall},
+  coltitle=white,
+  colbacktitle=warn,
+  fonttitle=\bfseries
+}
+
+% ---------- Metadata ----------
+\title{\textbf{Overleaf Meets Claude Code}\\[2pt]\large A Practical Workflow Guide for Writing \LaTeX{} with Overleaf, GitHub, and Claude Code}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent This guide describes a three-tool workflow for writing \LaTeX{} documents: drafting in Overleaf for its live preview and collaboration, versioning through GitHub, and using Claude Code for bulk, structural, and cross-cutting edits that are slow or error-prone to do by hand. The repository containing this guide is itself an example of the workflow it describes.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\input{sections/introduction}
+\input{sections/why}
+\input{sections/setup}
+\input{sections/workflow}
+\input{sections/strengths}
+\input{sections/tips}
+\input{sections/pitfalls}
+\input{sections/conclusion}
+
+\end{document}
