@@ -1,7 +1,9 @@
 \section{Setup}
 \label{sec:setup}
 
-One-time setup takes about ten minutes. You need an Overleaf Premium account (GitHub sync is a paid feature), a GitHub account, and a machine with Node.js and Git installed.
+Before you can use this workflow, you need to connect the three tools to each other once. If GitHub or Claude Code are new to you, do not worry: the steps below explain each action as you go, and you will only need to do this once. The daily loop described in the next section is much shorter.
+
+One-time setup takes about ten minutes. You need an Overleaf Premium account (GitHub sync is a paid feature), a free GitHub account, and a machine with Node.js and Git installed.
 
 \subsection{Link Overleaf to GitHub}
 
@@ -30,6 +32,10 @@ Claude Code is distributed via npm:
 $ npm install -g @anthropic-ai/claude-code
 $ claude --version
 \end{lstlisting}
+
+\begin{tipbox}{First time in a terminal?}
+Open the Terminal application on your computer (search ``Terminal'' on Mac or Windows). You only need to run these two commands once. The Claude Code documentation at the URL below walks you through authentication step by step.
+\end{tipbox}
 
 \noindent See \url{https://docs.claude.com/en/docs/claude-code} for the current installation instructions and authentication steps.
 

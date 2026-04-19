@@ -1,23 +1,20 @@
 \section{Introduction}
 
-If you write in \LaTeX{}, you have probably had one of the following experiences:
+Every academic writer knows the feeling: the paper is almost done, and then the real work begins. A reviewer asks you to rename a defined term that appears forty times across eight files. Your co-author decides to reformat every citation the night before submission. The journal's word limit is 250 words shorter than your abstract. Half your cross-references point at labels that no longer exist, and you only find out when you open the PDF. These tasks are not difficult---they are just slow, tedious, and easy to get wrong when done by hand.
 
-\begin{itemize}[leftmargin=*]
-  \item A reviewer asks you to rename a defined term that appears in forty places across eight section files.
-  \item Your co-author changes citation style from \verb|\cite| to \verb|\citet|/\verb|\citep| the night before submission.
-  \item You need to shorten an abstract by thirty words without losing a claim.
-  \item Half of your \verb|\ref| targets point at labels that no longer exist, and you only find out in the PDF.
-\end{itemize}
+The standard solution is to write academic papers in \LaTeX{} using \textit{Overleaf}. \LaTeX{} is a document preparation system: instead of clicking formatting buttons, you write markup that a compiler turns into precisely laid-out PDFs. It is the standard in mathematics, physics, computer science, and many other fields because it handles equations, citations, cross-references, and journal templates with a precision that word processors cannot match. Overleaf makes \LaTeX{} accessible: it runs in your browser, compiles your document in real time, and lets co-authors collaborate through a shared link---no installation required.
 
-Overleaf is excellent at writing, previewing, and sharing \LaTeX{}. It is not built for bulk structural edits. A local editor with an AI assistant is excellent at bulk edits but bad at real-time preview and lightweight collaboration. GitHub ties the two together and gives you a clean audit trail.
+But even Overleaf has limits. It is designed for writing and real-time collaboration, not for bulk edits that span many files at once. Renaming a term globally, enforcing a citation style across an entire manuscript, or auditing every cross-reference in a large project---these are jobs Overleaf was never built to do efficiently. The gap is not a flaw; it is a deliberate design choice. Overleaf is a writing environment. It needs a partner for the editing jobs.
 
-This guide documents a workflow that combines the three:
+Two free tools fill that gap. \textit{GitHub} is a service that stores your project online and keeps a complete, named history of every change you make---think of it as a permanent, searchable undo history for your entire project, where every edit is labelled and anything can be reversed. \textit{Claude Code} is an AI assistant that runs on your computer and can read, understand, and edit every file in your project at once; you describe what you want in plain English, it proposes the changes, and you approve or reject them. Neither tool requires programming experience.
+
+Together, the three tools form a short loop:
 
 \begin{enumerate}[leftmargin=*]
-  \item \textbf{Draft} in Overleaf with live preview.
-  \item \textbf{Sync} to GitHub using Overleaf's built-in integration.
-  \item \textbf{Edit} locally with Claude Code for anything global, structural, or repetitive.
-  \item \textbf{Push} back, pull into Overleaf, continue writing.
+  \item \textbf{Draft} in Overleaf with live preview, as normal.
+  \item \textbf{Save a checkpoint} by syncing to GitHub from Overleaf's menu---one click, and the current state of every file is labelled and stored.
+  \item \textbf{Ask Claude Code} to make the edit you need; review what it proposes; approve it.
+  \item \textbf{Sync back} to Overleaf and continue writing.
 \end{enumerate}
 
-The repository that contains this document is itself a worked example: a modular \LaTeX{} project with a \verb|CLAUDE.md|, a \verb|.gitignore|, and one file per section.
+Bulk edits that used to take an hour take a sentence. Every change is logged and reversible. You can attempt a large restructure and undo it completely if you dislike the result. You are not replacing your Overleaf workflow---you are adding two tools that handle the jobs Overleaf was never designed for. The repository that contains this document is itself a worked example: a modular \LaTeX{} project with a conventions file, a tidy \verb|.gitignore|, and one commit per change.

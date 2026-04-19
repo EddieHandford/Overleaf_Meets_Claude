@@ -4,10 +4,10 @@
 Each tool has a sweet spot. The trick is to stop asking any one of them to do what it is bad at.
 
 \subsection{Overleaf}
-Overleaf is a writing environment. Its strengths are:
+Overleaf is a browser-based \LaTeX{} editor. You write your paper in a markup language that produces precisely formatted PDFs, and Overleaf compiles it in real time so you can see the result as you type. You do not need to install anything; your co-authors access the same document through a link. Its strengths are:
 \begin{itemize}[leftmargin=*]
   \item Live PDF preview with sub-second compile-on-save.
-  \item Zero-install collaboration --- co-authors click a link and type.
+  \item Zero-install collaboration---co-authors click a link and type.
   \item A complete TeX Live with most packages pre-installed.
   \item Rich-text mode for co-authors who have never seen \LaTeX{}.
   \item Track changes, comments, and a linear version history.
@@ -16,7 +16,7 @@ Overleaf is a writing environment. Its strengths are:
 It is deliberately \emph{not} a programmer's editor. Multi-file search-and-replace is clunky, refactoring is manual, and you cannot ask it ``find every \verb|\cite| whose key is missing from the \texttt{.bib}.''
 
 \subsection{Claude Code}
-Claude Code runs locally in your terminal and has read/write access to every file in the project. For a \LaTeX{} project that means it can:
+Claude Code is an AI assistant made by Anthropic. Unlike a web chatbot, it runs directly on your computer with read and write access to your project files. You type a request in plain English---``rename every instance of \emph{X} to \emph{Y}'', ``find all citation keys that are missing from the bibliography''---and it reads the relevant files, proposes changes, and waits for your approval. For a \LaTeX{} project that means it can:
 \begin{itemize}[leftmargin=*]
   \item Read all section files and the bibliography at once.
   \item Make coordinated edits across many files in a single pass.
@@ -25,23 +25,31 @@ Claude Code runs locally in your terminal and has read/write access to every fil
   \item Produce reviewable diffs rather than opaque rewrites.
 \end{itemize}
 
+\begin{tipbox}{No programming required}
+You do not need to know how to programme. Requests are plain English. Claude Code proposes every change as a reviewable diff before modifying anything.
+\end{tipbox}
+
 It is bad at watching a PDF compile in real time and it is overkill for fixing a typo in one place.
 
 \subsection{GitHub}
-GitHub is the glue. It gives you:
+GitHub is a platform for storing and versioning files. Every time you push your project to GitHub, the current state of all your files is saved as a labelled snapshot. If an edit goes wrong, you can restore any previous snapshot. Think of it as a permanent, searchable version history for your whole project---not just one file, and not limited to the last few saves. It gives you:
 \begin{itemize}[leftmargin=*]
   \item A durable history of every edit, keyed by commit message.
   \item Branches for parallel work (a revision round, a response letter, an alternative introduction).
-  \item Pull requests as a review surface for co-authors or for you reviewing Claude's edits.
+  \item Pull requests as a review surface---a \textit{pull request} is a named proposal to merge a set of changes, which co-authors can inspect before it takes effect.
   \item Continuous integration that can build the PDF on every push, so nothing broken reaches your co-authors.
 \end{itemize}
 
+\begin{tipbox}{Start simple}
+You can use GitHub at the basic level---push from Overleaf, pull locally, push back---without ever learning branching or pull requests. Those features are there when you need them.
+\end{tipbox}
+
 \subsection{What you get by combining them}
 \begin{itemize}[leftmargin=*]
-  \item \textbf{Fast writing loop} in Overleaf --- stays in flow while drafting.
-  \item \textbf{Bulk and structural edits} via Claude Code --- minutes instead of hours.
-  \item \textbf{An audit trail} via GitHub --- every change is inspectable, revertible, and attributable.
-  \item \textbf{A single source of truth} --- the repository --- that both tools write into.
+  \item \textbf{Fast writing loop} in Overleaf---stays in flow while drafting.
+  \item \textbf{Bulk and structural edits} via Claude Code---minutes instead of hours.
+  \item \textbf{An audit trail} via GitHub---every change is inspectable, revertible, and attributable.
+  \item \textbf{A single source of truth}---the repository---that both tools write into.
 \end{itemize}
 
 The result is that each tool does the job it is best at, and you only ever touch the one that is right for the job in front of you.
